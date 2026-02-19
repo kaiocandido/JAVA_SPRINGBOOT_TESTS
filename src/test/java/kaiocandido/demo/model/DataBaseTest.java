@@ -21,7 +21,7 @@ public class DataBaseTest {
         connection.createStatement().execute("CREATE TABLE users (id INT, name VARCHAR)");
     }
 
-    @BeforeEach // executa sempre
+    @BeforeEach // executa sempre no começo de cada metodo
     @DisplayName("Testando insert no banco H2")
     void inserUserTest() throws Exception{
         connection.createStatement().execute("insert into users(id, name) values (1, 'jose')");
@@ -37,7 +37,7 @@ public class DataBaseTest {
     }
 
     @AfterAll // executa no final
-    //@AfterEach executada todas as vezes
+    //@AfterEach executada todas as vezes depois de cada metodo
     static void closeDataBase() throws  Exception{
         connection.close();
     }

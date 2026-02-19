@@ -1,7 +1,6 @@
 package kaiocandido.demo.model;
 
 import kaiocandido.demo.Exceptions.ReservaInvalidaException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ public class ReservaTest {
         var nome = client.getName();
 
         assertThat(nome).isEqualTo("kaio");
-        Assertions.assertEquals(300, total);
+        assertEquals(300, total);
     }
 
     @Test
@@ -46,21 +45,13 @@ public class ReservaTest {
     @Test
     @DisplayName("Numero Negativo gerando erro")
     void deveDarErroNumeroNegativos(){
-        // 1. cenario
-        int qntdDias = 0;
-        // 2. execução
-        Reserva reserva = new Reserva(qntdDias, carro, client);
-        // 3. verificação
-        var dias = reserva.getQntdDias();
-
-
         //JUnit
         assertThrows(ReservaInvalidaException.class, () -> new Reserva(0, carro, client));
         assertDoesNotThrow(() -> new Reserva(1, carro, client) );
 
         //AssertJ
-        //var erro = Assertions.catchThrowable(() -> new Reserva(0, carro, client));
-        //Assertions.assertThat(erro).isInstanceOf(ReservaInvalidaException.class).hasMessage("Reserva invalida! Dias tem que ser maior que 0");
+        var erro = catchThrowable(() -> new Reserva(0, carro, client));
+        assertThat(erro).isInstanceOf(ReservaInvalidaException.class).hasMessage("Reserva invalida! Dias tem que ser maior que 0");
     }
 
 

@@ -1,6 +1,6 @@
 package kaiocandido.demo.model;
 
-import kaiocandido.demo.Exceptions.ReservaInvalidaException;
+import kaiocandido.demo.exceptions.ReservaInvalidaException;
 
 public class Reserva {
     private int qntdDias;

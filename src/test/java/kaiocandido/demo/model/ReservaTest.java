@@ -1,6 +1,6 @@
 package kaiocandido.demo.model;
 
-import kaiocandido.demo.Exceptions.ReservaInvalidaException;
+import kaiocandido.demo.exceptions.ReservaInvalidaException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package kaiocandido.demo.Exceptions;
+package kaiocandido.demo.exceptions;
 
 public class ReservaInvalidaException extends RuntimeException {
   public ReservaInvalidaException(String message) {

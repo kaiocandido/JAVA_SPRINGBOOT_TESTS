@@ -10,19 +10,21 @@ import jakarta.persistence.Table;
 @Table(name = "carro")
 public class CarroEntity {
 
-    @Deprecated
-    public CarroEntity(){}
-
-    public CarroEntity(String modelo, double valorDiaria) {
-        this.modelo = modelo;
-        this.valorDiaria = valorDiaria;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String modelo;
     private double valorDiaria;
+    private int carroAno;
+
+    @Deprecated
+    public CarroEntity(){}
+
+    public CarroEntity(String modelo, double valorDiaria, int carroAno) {
+        this.modelo = modelo;
+        this.valorDiaria = valorDiaria;
+        this.carroAno = carroAno;
+    }
 
     public Long getId() {
         return id;
@@ -47,4 +49,13 @@ public class CarroEntity {
     public void setValorDiaria(double valorDiaria) {
         this.valorDiaria = valorDiaria;
     }
+
+    public int getCarroAno() {
+        return carroAno;
+    }
+
+    public void setCarroAno(int carroAno) {
+        this.carroAno = carroAno;
+    }
+
 }

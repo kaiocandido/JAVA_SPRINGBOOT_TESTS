@@ -133,4 +133,34 @@ class CarroServiceTest {
 
     }
 
+    @Test
+    @DisplayName("Validando se busca por ID")
+    void deveBuscarPorId(){
+        Long id = 1L;
+        var carroExistente = new CarroEntity("Sedan", 100.00, 2020);
+        carroExistente.setId(id);
+        Mockito.when(carroRespository.findById(id)).thenReturn(Optional.of(carroExistente));
+        var resultado = carroService.buscarPorId(id);
+
+        assertEquals("Sedan", resultado.getModelo());
+        assertEquals(id, resultado.getId());
+        Mockito.verify(carroRespository, Mockito.times(1)).findById(id);
+        Mockito.verifyNoMoreInteractions(carroRespository);
+
+    }
+
+    @Test
+    @DisplayName("Validando se gera erro ao busca por ID inexistente")
+    void deveDarErroAoBuscarPorIdInexistente(){
+        var carro = new CarroEntity("Sedan", 100.00, 2020);
+        Long id = 1L;
+        carro.setId(id);
+        Mockito.when(carroRespository.findById(Mockito.any())).thenReturn(Optional.empty());
+
+        var erro = catchThrowable(() -> carroService.buscarPorId(id));
+        assertThat(erro).isInstanceOf(EntityNotFoundException.class);
+        Mockito.verify(carroRespository, Mockito.never()).deleteById(Mockito.any());
+
+    }
+
 }

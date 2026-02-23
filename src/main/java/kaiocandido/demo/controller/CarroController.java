@@ -1,9 +1,12 @@
 package kaiocandido.demo.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import kaiocandido.demo.entity.CarroEntity;
 import kaiocandido.demo.service.CarroService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,4 +31,18 @@ public class CarroController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
         }
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<CarroEntity> detalhesCarro(@PathVariable("id") Long id){
+        try {
+            var carroEncontrado = carroService.buscarPorId(id);
+            return ResponseEntity.ok(carroEncontrado);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
+
 }

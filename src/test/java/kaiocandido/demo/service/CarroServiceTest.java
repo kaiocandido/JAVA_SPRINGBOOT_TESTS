@@ -68,7 +68,7 @@ class CarroServiceTest {
 
         var carro = new CarroEntity("Sedan", 20.00, 2020);
 
-        var resultado = carroService.atualizar(carro, id);
+        var resultado = carroService.atualizar(id, carro);
 
         assertEquals(resultado.getModelo(), "Uno");
         Mockito.verify(carroRespository, Mockito.times(1)).save(Mockito.any());
@@ -83,7 +83,7 @@ class CarroServiceTest {
 
         Mockito.when(carroRespository.findById(Mockito.any())).thenReturn(Optional.empty());
 
-        var erro = catchThrowable(() -> carroService.atualizar(carro, id));
+        var erro = catchThrowable(() -> carroService.atualizar(id, carro));
         assertThat(erro).isInstanceOf(EntityNotFoundException.class);
 
         Mockito.verify(carroRespository, Mockito.never()).save(Mockito.any());

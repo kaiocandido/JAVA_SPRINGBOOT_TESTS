@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
 import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,12 +90,64 @@ class CarroControllerTest {
                 ).andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("Validando se vai listar os carros")
+    void deveListarTodosOsCarros() throws Exception {
+        // cenario
+        var listagem = List.of(
+                new CarroEntity("uno", 100.00, 2020),
+                new CarroEntity("Gol G5", 100.00, 2012)
+        );
+        when(carroService.listar()).thenReturn(listagem);
+        // execução && validação
+        mvc.perform(
+                MockMvcRequestBuilders.get("/carros")
+        ).andExpect(status().isOk()).andExpect(jsonPath("$[0].modelo").value("uno"))
+                .andExpect(jsonPath("$[1].modelo").value("Gol G5"));
+    }
+
+    @Test
+    @DisplayName("Validando se atualiza o carro")
+    void deveAtualizarOCarro() throws Exception  {
+        when(carroService.atualizar(Mockito.anyLong(), Mockito.any()))
+                .thenReturn( new CarroEntity("uno", 100.00, 2020));
+
+        String json = """
+                {
+                    "modelo": "Celta",
+                    "valorDiaria": 100.00,
+                    "carroAno": 2021
+                }
+                """;
+
+        mvc.perform(
+                MockMvcRequestBuilders.put("/carros/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)).andExpect(status().isNoContent());
+    }
 
 
+    @Test
+    @DisplayName("Validando se gera erro ao atualiza o carro")
+    void deveDarErroAoAtualizarOCarro() throws Exception  {
 
+        // cenario
+        when(carroService.atualizar(Mockito.anyLong(), Mockito.any())).thenThrow(EntityNotFoundException.class);
 
-
-
+        String json = """
+                {
+                    "modelo": "Celta",
+                    "valorDiaria": 100.00,
+                    "carroAno": 2021
+                }
+                """;
+        // execução
+        mvc.perform(
+                MockMvcRequestBuilders.put("/carros/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(status().isNotFound());
+    }
 
 
 

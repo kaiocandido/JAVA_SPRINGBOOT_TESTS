@@ -22,7 +22,7 @@ public class CarroService {
         return carroRespository.save(carro);
     }
 
-    public CarroEntity atualizar(CarroEntity carro, long id){
+    public CarroEntity atualizar( long id, CarroEntity carro){
         var carroExiste = carroRespository.findById(id).orElseThrow(() -> new  EntityNotFoundException("Carro não existe"));
         carroExiste.setCarroAno(2000);
         return carroRespository.save(carroExiste);

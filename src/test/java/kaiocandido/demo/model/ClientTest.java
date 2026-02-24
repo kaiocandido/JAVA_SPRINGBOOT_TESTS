@@ -21,7 +21,7 @@ public class ClientTest {
         assertThat(name.length()).isLessThan(100);
         assertNotNull(name);
         assertTrue(name.startsWith("m"));
-        assertFalse(name.length() == 100);
+        assertNotEquals(100, name.length());
 
     }
 

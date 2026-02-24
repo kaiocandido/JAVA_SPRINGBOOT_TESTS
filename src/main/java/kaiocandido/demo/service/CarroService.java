@@ -38,8 +38,7 @@ public class CarroService {
     }
 
     public CarroEntity buscarPorId(long id){
-        var carroEncontrado = carroRespository.findById(id).orElseThrow(() -> new EntityNotFoundException("Carro não existe"));
-        return carroEncontrado;
+        return carroRespository.findById(id).orElseThrow(() -> new EntityNotFoundException("Carro não existe"));
     }
 
     public List<CarroEntity> listar(){

@@ -2,7 +2,7 @@ package kaiocandido.demo.model;
 
 public class Carro {
     private String modelo;
-    private Double valorDiaria;
+    private final Double valorDiaria;
 
     public Carro(String modelo, Double valorDiaria) {
         this.modelo = modelo;

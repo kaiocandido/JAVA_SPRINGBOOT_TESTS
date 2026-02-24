@@ -3,8 +3,6 @@ package kaiocandido.demo.service;
 import jakarta.persistence.EntityNotFoundException;
 import kaiocandido.demo.entity.CarroEntity;
 import kaiocandido.demo.repository.CarroRespository;
-import org.assertj.core.api.ThrowableAssert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,7 +68,7 @@ class CarroServiceTest {
 
         var resultado = carroService.atualizar(id, carro);
 
-        assertEquals(resultado.getModelo(), "Uno");
+        assertEquals("Uno", resultado.getModelo());
         Mockito.verify(carroRespository, Mockito.times(1)).save(Mockito.any());
     }
 
@@ -107,7 +105,7 @@ class CarroServiceTest {
     @DisplayName("Verificando se gera o erro quando deletamos o carro que não existe")
     void deveDarErroAoDeletarOCarroInexistente(){
         CarroEntity carro = new CarroEntity("Sedan", 100.00, 2020);
-        Long id = 1L;
+        long id = 1L;
         carro.setId(id);
         Mockito.when(carroRespository.findById(Mockito.any())).thenReturn(Optional.empty());
 
@@ -153,7 +151,7 @@ class CarroServiceTest {
     @DisplayName("Validando se gera erro ao busca por ID inexistente")
     void deveDarErroAoBuscarPorIdInexistente(){
         var carro = new CarroEntity("Sedan", 100.00, 2020);
-        Long id = 1L;
+        long id = 1L;
         carro.setId(id);
         Mockito.when(carroRespository.findById(Mockito.any())).thenReturn(Optional.empty());
 

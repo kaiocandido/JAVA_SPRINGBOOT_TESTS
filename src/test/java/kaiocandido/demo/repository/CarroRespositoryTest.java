@@ -15,8 +15,6 @@ import org.springframework.test.context.jdbc.Sql;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @DataJpaTest
 @ActiveProfiles("teste")
 class CarroRespositoryTest {

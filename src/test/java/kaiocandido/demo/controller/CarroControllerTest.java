@@ -19,7 +19,6 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,7 +37,7 @@ class CarroControllerTest {
     void deveSalvarOCarro() throws  Exception{
         //Cenario
         CarroEntity carro = new CarroEntity("Uno", 200.00, 2020);
-        carro.setId(1l);
+        carro.setId(1L);
         when(carroService.salvar(Mockito.any())).thenReturn(carro);
 
         String json = """
@@ -149,12 +148,27 @@ class CarroControllerTest {
         ).andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("Validando se deleta carro")
+    void deveDeletarCarro() throws Exception {
+        Mockito.doNothing().when(carroService).deleteCarro(Mockito.anyLong());
 
+        mvc.perform(
+                MockMvcRequestBuilders.delete("/carros/1")
+        ).andExpect(status().isNoContent());
 
+    }
 
+    @Test
+    @DisplayName("Validando se gera erro ao deleta carro")
+    void deveGerarErroAoDeletarCarro() throws Exception {
+        Mockito.doThrow(EntityNotFoundException.class).when(carroService).deleteCarro(Mockito.anyLong());
 
+        mvc.perform(
+                MockMvcRequestBuilders.delete("/carros/1")
+        ).andExpect(status().isNotFound());
 
-
+    }
 
 
 

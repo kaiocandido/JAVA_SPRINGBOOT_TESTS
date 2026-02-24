@@ -22,12 +22,16 @@ public class CarroService {
         return carroRespository.save(carro);
     }
 
-    public CarroEntity atualizar( long id, CarroEntity carro){
-        var carroExiste = carroRespository.findById(id).orElseThrow(() -> new  EntityNotFoundException("Carro não existe"));
-        carroExiste.setCarroAno(2000);
+    public CarroEntity atualizar(Long id, CarroEntity carro){
+        var carroExiste = carroRespository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Carro não existe"));
+
+        carroExiste.setModelo(carro.getModelo());
+        carroExiste.setValorDiaria(carro.getValorDiaria());
+        carroExiste.setCarroAno(carro.getCarroAno());
+
         return carroRespository.save(carroExiste);
     }
-
     public void deleteCarro(long id){
         var carroDeletar = carroRespository.findById(id).orElseThrow(() -> new  EntityNotFoundException("Carro não existe"));
         carroRespository.deleteById(id);
